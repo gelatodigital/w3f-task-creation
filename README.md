@@ -22,6 +22,14 @@ For further information, refer to our [documentation](https://docs.gelato.networ
 
 ## From the SDK
 
+Use the `automate-sdk` to easily create a new task:
+```
+yarn install @gelatonetwork/automate-sdk@beta
+```
+
+> **Note**
+> The `beta` version of the `automate-sdk` must be used for Web3 Function task creation.
+
 Import the SDK and create a task, passing your web3 function CID & arguments:
 
 ```ts
