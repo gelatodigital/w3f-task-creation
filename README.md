@@ -140,7 +140,11 @@ Since a Smart Contract is the task creator rather than the deployer:
 - The Smart Contract itself must be a whitelisted task creator.  
   It is insufficient to have only the Smart Contract deployer whitelisted.  
 - Sponsored executions will charge the Smart Contracts 1Balance rather than the deployers.  
-  The contracts 1Balance must be topped up using [depositFunds1Balance](https://github.com/gelatodigital/w3f-task-creation/blob/main/contracts/Oracle1BalanceTaskCreator.sol#L51-L57).  
+  The contracts 1Balance must be topped up using [depositFunds1Balance](https://github.com/gelatodigital/w3f-task-creation/blob/main/contracts/Oracle1BalanceTaskCreator.sol#L51-L57).
+
+> **Note**
+> `depositFunds1Balance` only works for contracts deployed on Polygon.  
+> For other networks, directly [deposit funds](https://polygonscan.com/address/0x7506C12a824d73D9b08564d5Afc22c949434755e#writeProxyContract#F8) to 1Balance on behalf of the contract using polygonscan.
 
 ### Examples
 
