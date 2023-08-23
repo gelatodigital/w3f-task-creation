@@ -9,8 +9,8 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
   const { storage, userArgs, gelatoArgs, multiChainProvider } = context;
   const provider = multiChainProvider.default();
 
-  //const subtaskId = await storage.get("subtaskId");
-  //if (subtaskId) return { canExec: false, message: "Subtask already running" };
+  const subtaskId = await storage.get("subtaskId");
+  if (subtaskId) return { canExec: false, message: "Subtask already running" };
 
   const signer = ethers.Wallet.createRandom().connect(provider);
   const automate = new AutomateSDK(gelatoArgs.chainId, signer);
