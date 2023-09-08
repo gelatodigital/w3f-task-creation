@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity 0.8.21;
 
 enum Module {
     RESOLVER,
@@ -14,15 +14,6 @@ struct ModuleData {
     bytes[] args;
 }
 
-struct Gelato1BalanceParam {
-    address sponsor;
-    address feeToken;
-    uint256 oneBalanceChainId;
-    uint256 nativeToFeeTokenXRateNumerator;
-    uint256 nativeToFeeTokenXRateDenominator;
-    bytes32 correlationId;
-}
-
 interface IAutomate {
     function createTask(
         address execAddress,
@@ -33,39 +24,11 @@ interface IAutomate {
 
     function cancelTask(bytes32 taskId) external;
 
-    function exec(
-        address taskCreator,
-        address execAddress,
-        bytes memory execData,
-        ModuleData calldata moduleData,
-        uint256 txFee,
-        address feeToken,
-        bool useTaskTreasuryFunds,
-        bool revertOnFailure
-    ) external;
-
-    function exec1Balance(
-        address taskCreator,
-        address execAddress,
-        bytes memory execData,
-        ModuleData calldata moduleData,
-        Gelato1BalanceParam calldata oneBalanceParam,
-        bool revertOnFailure
-    ) external;
-
     function getFeeDetails() external view returns (uint256, address);
 
     function gelato() external view returns (address payable);
 
     function taskModuleAddresses(Module) external view returns (address);
-
-    function getTaskId(
-        address taskCreator,
-        address execAddress,
-        bytes4 execSelector,
-        ModuleData memory moduleData,
-        address feeToken
-    ) external pure returns (bytes32 taskId);
 }
 
 interface IProxyModule {
@@ -84,4 +47,8 @@ interface IGelato1Balance {
         address _token,
         uint256 _amount
     ) external;
+}
+
+interface IGelato {
+    function feeCollector() external view returns (address);
 }

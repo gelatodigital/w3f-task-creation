@@ -3,7 +3,11 @@ import {
   Web3Function,
   Web3FunctionContext,
 } from "@gelatonetwork/web3-functions-sdk";
-import { AutomateSDK } from "@gelatonetwork/automate-sdk";
+import {
+  AutomateSDK,
+  TriggerConfig,
+  TriggerType,
+} from "@gelatonetwork/automate-sdk";
 
 Web3Function.onRun(async (context: Web3FunctionContext) => {
   const { storage, userArgs, gelatoArgs, multiChainProvider } = context;
@@ -20,6 +24,11 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
   const creatorAddress = userArgs.creatorAddress as string;
   const contractAddress = userArgs.contractAddress as string;
 
+  const trigger: TriggerConfig = {
+    type: TriggerType.TIME,
+    interval: 60 * 1000, // 1 minute
+  };
+
   const { taskId, tx } = await automate.prepareBatchExecTask(
     {
       name: "Oracle",
@@ -28,6 +37,7 @@ Web3Function.onRun(async (context: Web3FunctionContext) => {
         contractAddress,
       },
       useTreasury,
+      trigger,
     },
     {},
     creatorAddress

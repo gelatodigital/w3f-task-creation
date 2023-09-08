@@ -1,5 +1,9 @@
-import { AutomateSDK } from "@gelatonetwork/automate-sdk";
 import { deployments, ethers, w3f } from "hardhat";
+import {
+  AutomateSDK,
+  TriggerConfig,
+  TriggerType,
+} from "@gelatonetwork/automate-sdk";
 
 const main = async () => {
   const oracleW3f = w3f.get("oracle");
@@ -17,6 +21,11 @@ const main = async () => {
 
   const automate = new AutomateSDK(chainId, deployer);
 
+  const trigger: TriggerConfig = {
+    type: TriggerType.TIME,
+    interval: 60 * 1000, // 1 minute
+  };
+
   const { taskId, tx } = await automate.createBatchExecTask({
     name: "Oracle Creator",
     web3FunctionHash: creatorCid,
@@ -27,6 +36,7 @@ const main = async () => {
       contractAddress: oracle.address,
     },
     useTreasury: true,
+    trigger,
   });
 
   await tx.wait();
